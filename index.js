@@ -1,4 +1,5 @@
 const { ApolloServer, gql } = require('apollo-server');
+const books = require('./sessions.json');
 
 // A schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against
@@ -9,8 +10,15 @@ const typeDefs = gql`
   # This "Book" type defines the queryable fields for every book in our data source.
   type Book {
     id: ID,
-    title: String
-    author: String
+    title: String!,
+    description: String,
+    startsAt: String,
+    endsAt: String,
+    room: String,
+    day: String,
+    format: String,
+    track: String,
+    level: String
   }
 
   # The "Query" type is special: it lists all of the available queries that
@@ -23,7 +31,9 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    books: () => books,
+    books: () => {
+      return books;
+    }
   },
 };
 
