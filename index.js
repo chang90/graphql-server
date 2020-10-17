@@ -10,7 +10,7 @@ const typeDefs = gql`
   # This "Book" type defines the queryable fields for every book in our data source.
   type Book {
     id: ID,
-    title: String!,
+    title: String,
     description: String,
     startsAt: String,
     endsAt: String,
@@ -25,14 +25,29 @@ const typeDefs = gql`
   # clients can execute, along with the return type for each. In this
   # case, the "books" query returns an array of zero or more Books (defined above).
   type Query {
-    books: [Book]
+    books(
+        id: ID,
+        title: String,
+        description: String,
+        startsAt: String,
+        endsAt: String,
+        room: String,
+        day: String,
+        format: String,
+        track: String ,
+        level: String
+    ): [Book],
+    bookById(id:ID): Book
   }
 `;
 
 const resolvers = {
   Query: {
-    books: (parent,args, {dataSources},info) => {
-      return dataSources.bookAPI.getBooks();
+    books: (parent, args, {dataSources}, info) => {
+      return dataSources.bookAPI.getBooks(args);
+    },
+    bookById: (parent, {id}, {dataSources}, info) =>{
+      return dataSources.bookAPI.getBookById(id);
     }
   },
 };
