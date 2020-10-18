@@ -1,4 +1,4 @@
-const { ApolloServer, gql } = require('apollo-server');
+const { ApolloServer, gql, ApolloError } = require('apollo-server');
 const BookAPI = require('./datasources/books');
 const SpeakerAPI = require('./datasources/speakers');
 
@@ -13,7 +13,18 @@ const dataSources = () =>({
   speakerAPI: new SpeakerAPI()
 });
 
-const server = new ApolloServer({ typeDefs, resolvers, dataSources });
+const server = new ApolloServer({ 
+  typeDefs, 
+  resolvers, 
+  dataSources,
+  debug: false,
+  formatError: (err) => {
+    if(err.extensions.code == 'INTERNAL_SERVER_ERROR'){
+      return new ApolloError("Oh no", "server not working", {token: "uniquetoken"})
+    }
+    return err;
+  }
+ });
 
 server.listen().then(({ url }) => {
   console.log(`Server ready at ${url}`);
