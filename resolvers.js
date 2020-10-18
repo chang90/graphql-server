@@ -1,10 +1,8 @@
+
+const Query = require('./resolvers/query')
+const Book = require('./resolvers/book')
+
 module.exports = {
-  Query: {
-    books: (parent, args, {dataSources}, info) => {
-      return dataSources.bookAPI.getBooks(args);
-    },
-    bookById: (parent, {id}, {dataSources}, info) =>{
-      return dataSources.bookAPI.getBookById(id);
-    }
-  },
+  Query,
+  Book
 };

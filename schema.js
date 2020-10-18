@@ -14,6 +14,14 @@ type Book {
   format: String,
   track: String @deprecated(reason:"some reason"),
   level: String
+  speakers: [Speaker]
+}
+
+type Speaker {
+  id: ID!
+  bio: String
+  name: String
+  books: [Book]
 }
 
 # The "Query" type is special: it lists all of the available queries that
@@ -32,6 +40,8 @@ type Query {
       track: String ,
       level: String
   ): [Book],
-  bookById(id:ID): Book
+  bookById(id:ID): Book,
+  speakers:[Speaker],
+  speakerById(id:ID): Speaker,
 }
 `;
