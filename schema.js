@@ -53,7 +53,7 @@ type Query {
       description: String,
       startsAt: String,
       endsAt: String,
-      room: String,
+      room: Room,
       day: String,
       format: String,
       track: String ,
@@ -62,5 +62,10 @@ type Query {
   bookById(id:ID): Book,
   speakers:[Speaker],
   speakerById(id:ID): Speaker,
+}
+enum Room {
+  EUROPA
+  SOL
+  SATURN
 }
 `;
